@@ -1,0 +1,52 @@
+<div class="modal" ng-controller="NewEventCtrl">
+
+    <ion-header-bar class="bar-secondary bar-stable" style="background:url('css/images/blueheader.png');color:#fff">
+        <button class="button button-clear button-light" style="color:#fff" ng-click="closeNewEvent()">Cancel</button>
+
+        <h1 class="title" style="color:#fff"><b>New Activity</b>
+        </h1>
+        <button class="button button-clear button-light" ng-click="createEvent()" ng-class="creatingEvent?'disabled':''" style="color:#fff">{{(creatingEvent?'Posting':'Post')}}</button>
+
+    </ion-header-bar>
+    <ion-header-bar class="bar bar-subheader bar-stable">
+        <div class="button-bar">
+            <a class="button button-small button-outline button-stable" ng-class="event.privacy==who?'active':''" ng-repeat="who in privacy" ng-click="event.privacy=who" style="padding-left:0px;padding-right:0px">{{who}}</a>
+        </div>
+    </ion-header-bar>
+
+    <ion-content scroll="false">
+        <form id="newEvent">
+
+            <label class="item input-wrapper" style="padding:11px;border-bottom:0px">
+                <textarea placeholder="What do you want to do?" ng-model="event.desc" ng-trim="false" rows="4" style="font-size:24px;line-height:24px" ng-minlength="3"></textarea>
+
+            </label>
+
+            <div class="padding" style="margin-top:0px;padding-top:1px">
+                <a class="new-event-icon icon button-icon ion-ios7-time-outline button button-small button-clear button-stable" ng-class="event.privacy==who?'active':''" ng-click="chooseTime()" style="text-align:left !important;vertical-align:middle;font-size:14px;padding:4px 8px 4px 8px;width:100%;background:#fcfcfc;border:1px solid #dcdcdc;border-radius:2px;margin-bottom:5px;margin-top:0px;box-shadow: 0px 0px 1px rgba(0,0,0,.1)">When?
+                    <span style="font-weight:bold;text-align:right;float:right;white-space: nowrap">
+                        {{event.date.name=='Today' ? (event.time.custom?'':'This '):event.date.name+' '}}{{(event.time.custom?formatTime(event.time.startTime)+' to '+formatTime(event.time.endTime):event.time.name)}}
+                    </span>
+                </a>
+
+                <ion-google-place placeholder="{{(addresses[3]['short_name']?addresses[3]['short_name']+' Area':'Locating...')}}" ng-model="data.googleLocation" style="color:#444;display:inline-block;text-align:left;position:relative;z-index:100" address="addresses"></ion-google-place>
+
+            </div>
+
+            <div class="row" ng-show="exactTimes">
+                <div class="col">
+                    <label class="item item-input">
+                        <input type="text" ng-model="event.userStartTime">
+                    </label>
+                </div>
+                <div class="col">
+                    <label class="item item-input">
+                        <input type="text" ng-model="event.userEndTime">
+                    </label>
+                </div>
+            </div>
+
+        </form>
+    </ion-content>
+
+</div>

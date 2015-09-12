@@ -1,0 +1,18 @@
+<div class="button-bar">
+    <button class="button button-stable " style="border-radius:0px;padding:0px 4px 0px 4px;font-size:14px" ng-repeat="date in dates" ng-model="event.date" ng-class="event.date==date?'active':''" ng-click="event.date=date">{{date.name}}</button>
+</div>
+<div class="button-bar">
+    <button ng-show="checkTime(time)" class="button button-stable " style="border-radius:0px;border-top:0px;padding:0px 4px 0px 4px;font-size:14px;{{(time.custom?'font-weight:bold':'')}}" ng-repeat="time in times" ng-model="event.time" ng-class="event.time==time?'active':''" ng-click="event.time=time">{{(time.custom?'Custom':time.name)}}
+    </button>
+</div>
+
+<div class="card pick-custom-time" ng-show="event.time.custom" style="margin:0px;margin-top:5px;text-align:center;background:#fff;border:1px solid #ccc;border-radius:2px;padding:10px 0px 10px 0px;">
+    Starts at
+    <select ng-options="i.value as i.title for i in customTimes" style="-webkit-appearance:none;border:0px;border-radius:0px;background:none;padding:0px;margin:0px 3px 0px 2px;border-bottom: 1px dotted #ccc;text-align:center;font-size:18px;font-weight:bold" ng-model="event.time.startTime" ng-value="i.value">
+        <option value='' ng-if="false"></option>
+    </select> and lasts
+    <select ng-options="i for i in [1,2,3,4,5,6]" style="-webkit-appearance:none;border:0px;border-radius:0px;background:none;padding:0px 8px 0px 8px;margin:0px 3px 0px 3px;border-bottom: 1px dotted #ccc;text-align:center;font-size:18px;font-weight:bold" ng-model="event.customLength" ng-value="i">
+        <option value='' ng-if="false"></option>
+    </select>
+    hour{{(event.customLength>1?'s':'')}}
+</div>

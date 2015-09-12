@@ -1,0 +1,66 @@
+<ion-view title="<b>{{headerText}}</b>" hide-back-button="yes">
+    <ion-nav-buttons side="left">
+        <button class="button button-icon icon ion-ios7-arrow-back" ng-click="goBack()" style="color:#fff"></button>
+    </ion-nav-buttons>
+
+    <ion-nav-buttons side="right">
+        <button class="button button-clear" ng-click="sendInvitations()">{{confirmationText}}</button>
+    </ion-nav-buttons>
+
+    <ion-header-bar class="bar-light bar-subheader">
+        <div class="row" style="margin:0px;padding:0px">
+            <div class="col-75" style="position:relative">
+                <input type="search" placeholder="Search contacts..." ng-model="search" ng-focus="searchFocused = true" ng-blur="searchFocused = false" ng-change="scrollTop()" style="width:80%">
+                <button ng-if="search.length" class="button button-icon ion-ios7-close-empty input-button" ng-click="clearSearch()" style="position: absolute;right: 0; top: 0px;color: #bbb;">
+                </button>
+            </div>
+            <div class="col-25" style="text-align:right;">
+                <button ng-click="selectAll()" style="font-size:14px;" class="button button-small button-assertive button-clear" style="white-space: nowrap">
+                    <b>{{(selectAllToggle?'Select All':'Undo')}}</b>
+                </button>
+            </div>
+        </div>
+
+    </ion-header-bar>
+
+    <ion-content>
+        <div style="line-height:0px">
+
+            <div class="list">
+                <div style="left: 0 !important;right: 0 !important;" collection-repeat="contact in getContacts()" collection-item-height="(contact.id?60:55)" collection-item-width="'100%'">
+
+                    <div ng-if="contact.id" class="item" ng-model="contact.checked" ng-checked="contact.checked" style="padding:5px" ng-click="toggleInvite(contact)">
+
+                        <div style="position:relative;background:url({{contact.picture.data.url}});background-size:100%;width:50px;height:50px;border-radius:50%;vertical-align:middle;margin-right:10px;display:inline-block;text-align:center;">
+
+                            <div ng-show="contact.checked || eventAttendees['facebook:'+contact.id]" style="position:absolute;background:rgba({{(eventAttendees['facebook:'+contact.id]?'255,255,255':'0,0,0')}},.5);width:100%;height:100%;border-radius:50%">
+                            </div>
+
+                            <i class="icon ion-checkmark" style="left:8px;top:5px;position:absolute;font-size:40px;color:#fff;text-shadow: 0px 2px 2px #000;opacity.5" ng-show="contact.checked"></i>
+
+                        </div>
+
+                        <b>{{contact.name}}</b><span style="font-size:12px;color:#999">
+                    {{(eventAttendees['facebook:'+contact.id]?'(Already attending)':'')}}</span>
+                    </div>
+
+                    <ion-checkbox ng-if="!contact.id" class="item checkbox-assertive" ng-model="contact.checked" ng-checked="contact.checked">
+                        {{contact.name}}
+                    </ion-checkbox>
+
+                </div>
+            </div>
+
+            <div class="list" ng-if="false">
+                <div ng-if="ContactManager.contacts.length>0" class="item item-divider">
+                    Other Contacts
+                </div>
+
+                <ion-checkbox class="checkbox-dark" href="#" ng-repeat="contact in getContacts(false)" ng-if="!contact.uid && contact.name" ng-model="contact.checked" ng-checked="contact.checked">
+
+                    {{contact.name}}
+                </ion-checkbox>
+            </div>
+    </ion-content>
+
+</ion-view>

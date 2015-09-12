@@ -1,0 +1,70 @@
+<div class="modal" ng-controller="NotificationsCtrl">
+
+    <ion-header-bar class="bar-secondary bar-assertive" style="background:url(css/images/header.png)">
+        <button class="button button-clear button-light" style="color:#fff" ng-click="hideNotifications()">Hide</button>
+
+        <h1 class="title">
+            <b>Notifications</b>
+        </h1>
+
+        <a class="button button-icon icon ion-gear-b" ng-click="loadSettings()"></a>
+
+        </ion-nav-buttons>
+
+    </ion-header-bar>
+
+    <ion-content style="background:#edeae9">
+        <div class="list">
+
+            <a class="item item-text-wrap item-icon-right item-avatar" ng-click="loadEvent(event.eid)" ng-repeat="(eid,event) in combined = $root.userNotificationsFeed | reverse" ng-class="$index>=numNotifications ? 'notification-old' : ''" style="padding-left:60px !important;font-size:15px;padding-top:10px;padding-bottom:10px;min-height:0px !important">
+                <div>
+                    <!--
+                    <span style="font-size:15px !important">
+
+                        <span ng-repeat="user in $root.userNotifications[event.type][event.eid] | orderObjectBy:'timestamp':true | limitTo:2" ng-init="attendee = $root.userCache.load(user.uid);">
+
+                            <img ng-if="$first" class="avatar" ng-src="$root.users[(event.type=='newevents'?event.uid:user.uid)].thumbnail" ng-class="$root.users[(event.type=='newevents'?event.uid:user.uid)].online ? 'user-online' : 'user-offline'" style="margin-left:-50px" />
+
+                            <b ng-if="event.type=='newevents'">{{$root.userCache.shortName(event.uid)}}</b>
+                            <span ng-if="event.type!='newevents'">
+                            <b>{{$root.userCache.shortName(user.uid)}}</b>
+                            {{
+                            (getObjectSize($root.userNotifications[event.type][event.eid])>2?
+                                ($last?
+                                    ' and '+(getObjectSize($root.userNotifications[event.type][event.eid])-2)+' more'
+                                :',&nbsp;')
+                            :
+                                ($last!=$first && $first?' and ':''))
+                            }}
+                            </span> 
+
+                            <strong>{{(event.type=='attendees' && $last?($first?' is ':' are '):'')}}</strong>
+
+                        </span>
+
+                    </span>
+                    -->
+                    
+                    {{event.text}} 
+                    
+                    <!--
+                    
+                    happening
+                    
+                    <span style="color:#000">{{formatTime(event.startTime)}}</span>
+                    <div style="color:#666;font-size:12px">
+                        {{$root.formatAgo(event.$priority)}}
+                    </div>
+                    </span>
+                    -->
+                </div>
+
+                <i class="icon ion-chevron-right icon-accessory"></i>
+
+            </a>
+
+        </div>
+
+    </ion-content>
+
+</div>

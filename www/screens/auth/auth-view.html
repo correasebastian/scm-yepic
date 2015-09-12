@@ -1,0 +1,28 @@
+<ion-view hide-nav-bar="true" style="background:url('css/images/cities/cleveland.jpg');background-size:110%;background-position: top;">
+    <ion-content scroll="false">
+        <div class="padding" style="margin-top:40px;text-align:center">
+            <div style="color:#c41411;text-shadow:0px 0px 4px rgba(64,0,0,.25);font-size:72px">
+                <b>YEPIC</b>
+            </div>
+            <div style="color:#333;font-size:24px;margin-top:30px;line-height:24px;text-shadow:0px 0px 20px rgba(255,255,255,1);">fun things to do and fun
+                <br> people to do them with
+            </div>
+        </div>
+
+        <div style="text-align:center;background:rgba(0,0,0,.6);width:100%;color:#fff;text-shadow:0px 0px 2px rgba(0,0,0,.5);font-size:24px;line-height:24px;padding:10px;margin-top:60px">Exclusively for Cleveland
+            <br>
+            <span style="font-size:18px;color:rgb(210,210,210)">other cities coming soon</span>
+        </div>
+
+        <br />
+
+        <button class="button button-assertive button-full icon icon-left ion-social-facebook" style="width:100%;text-shadow:0px 0px 2px rgba(0,0,0,.5);position:absolute;bottom:60px;" ng-click="login('facebook')" ng-show="$root.loggedOut">
+            <b>Login with Facebook</b>
+        </button>
+
+        <div style="color:#fff;text-align:center;position:absolute;bottom:20px;width:100%;text-shadow:0px 0px 10px rgba(0,0,0,1);" ng-show="$root.loggedOut">
+            By signing up, you agree to our Terms of Use
+        </div>
+
+    </ion-content>
+</ion-view>

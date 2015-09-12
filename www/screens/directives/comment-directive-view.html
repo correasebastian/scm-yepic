@@ -1,0 +1,29 @@
+<div class="padding" style="padding-top:8px;padding-bottom:0px;">
+
+    <div ng-class="event.uid!=comment.uid?'comment-bubble-left':'comment-bubble-right'" ng-init="commenter = $root.userCache.load(comment.uid)">
+
+        <a ng-class="$root.users[comment.uid].online ? 'user-online' : 'user-offline'" style="background:url({{$root.users[comment.uid].thumbnail}});background-size:100%;position:absolute;{{(event.uid==comment.uid?'right:10px;':'left:10px;')}}width:40px;height:40px;border-radius:20px;margin-left:0px !important;" ng-href="#/user/{{comment.uid}}"></a>
+
+        <div ng-if="event.uid==comment.uid" ng-class="event.uid!=comment.uid?'arrow-left':'arrow-right'" style="margin-right:-1px;margin-top:9px;border-width:6px;border-left-color:#ddd"></div>
+        <div ng-if="event.uid!=comment.uid" ng-class="event.uid!=comment.uid?'arrow-left':'arrow-right'" style="margin-left:-1px;margin-top:9px;border-width:6px;border-right-color:#ddd"></div>
+        <div ng-class="event.uid!=comment.uid?'arrow-left':'arrow-right'"></div>
+
+        <span style="min-width:40%;max-width:85%;box-shadow:rgba(0, 0, 0, 0.1) 0px 1px 2px 0px;color:#000;font-size:14px;line-height: 18px;
+    border-radius: 2px;
+    display: inline-table;
+    background: #fff;
+    border: 0px;
+    padding-left: 8px;
+    padding-right: 10px;
+    padding-top: 6px;
+    padding-bottom: 4px;-ms-word-break: keep-all; word-break: keep-all; word-wrap: normal;-webkit-hyphens: auto;-moz-hyphens: auto;hyphens: auto;">{{comment.msg}}
+            <div style="color:#999;font-size:10px;margin-top:-2px;white-space: nowrap;"><b>{{$root.userCache.shortName(comment.uid)}}</b>, {{$root.formatAgo(comment.timestamp)}}
+            </div>
+
+        </span>
+
+
+
+    </div>
+
+</div>

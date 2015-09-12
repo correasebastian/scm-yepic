@@ -1,0 +1,29 @@
+<ion-view title="<b>Settings</b>" hide-back-button="yes">
+    <ion-nav-buttons side="left">
+        <button class="button button-icon icon ion-ios7-arrow-back" ng-click="goBack()" style="color:#fff"></button>
+    </ion-nav-buttons>
+
+    <ion-content>
+
+        <div class="list">
+
+            <a class="item" href="#/user/{{$root.user.id}}">
+                <b>My Profile</b>
+            </a>
+
+            <a class="item" href="#/tags">
+                <b>My Interests</b>
+            </a>
+
+            <a class="item" href="#/feedback">
+                <b>Send Feedback</b>
+            </a>
+
+            <a class="item" ng-click="logout()">
+                <b>Logout</b>
+            </a>
+        </div>
+
+    </ion-content>
+
+</ion-view>

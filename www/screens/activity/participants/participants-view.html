@@ -1,0 +1,26 @@
+<ion-view title="<b>{{(showMap?'Map':'Participants')}}</b>" hide-back-button="yes">
+    <ion-nav-buttons side="left">
+        <button class="button button-icon icon ion-ios7-arrow-back" ng-click="goBack()" style="color:#fff"></button>
+    </ion-nav-buttons>
+
+    <ion-nav-buttons side="right">
+        <button class="button button-icon icon" ng-class="showMap?'ion-navicon':'ion-map'" ng-click="showMap=!showMap" style="color:#fff"></button>
+    </ion-nav-buttons>
+
+    <!-- Modal content area -->
+
+    <ion-content class="map">
+
+        <div ng-show="showMap" id="map" data-tap-disabled="true"></div>
+
+        <div ng-show="!showMap" class="list">
+            <a class="item item-avatar" ng-repeat="participant in participants | reverse" ng-init="$root.userCache.load(participant.$id);" href="#/user/{{participant.$id}}">
+                <img class="avatar" ng-src="{{$root.users[participant.$id].thumbnail}}" style="width:40px;height:40px;border-radius:20px" ng-class="$root.users[participant.$id].online ? 'user-online' : 'user-offline'" />{{$root.userCache.shortName(participant.$id)}}
+                <p>Joined {{formatAgo(participant.timestamp)}}</p>
+            </a>
+        </div>
+
+    </ion-content>
+
+
+</ion-view>

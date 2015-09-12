@@ -1,0 +1,10 @@
+www/lib/*
+platforms/*
+node_modules/
+bower_components/
+plugins/*
+www/lib/*
+www/css/ionic.app.min.css
+.DS_Store
+.bowerrc
+npm-debug.log

@@ -1,0 +1,39 @@
+<ion-view title='<b>{{timePeriodNames[$root.timePeriod]}}</b>'>
+
+    <ion-nav-buttons side="right">
+        <button ng-click="showNotifications()" class="button button-clear icon ion-ios7-bell" style="z-index:1;">
+            <span ng-show="$root.user.numNotifications>0" class="badge badge-assertive" style="margin-left:-18px;top:-10px;font-size:10px">{{($root.user.numNotifications?$root.user.numNotifications:'0')}}</span>
+
+        </button>
+    </ion-nav-buttons>
+
+    <ion-nav-buttons side="left">
+        <a class="button button-clear icon ion-ios7-calendar-outline" style="margin-top:-2px" ng-click="showMyEvents()">
+        </a>
+    </ion-nav-buttons>
+
+    <div ng-show="$root.newEventsAdded>0" ng-click="$root.events.updateEvents()" class="bar bar-subheader bar-assertive new-event-header">
+        <button class="button button-clear button-dark button-custom icon-left ion-refresh">Tap to load <b>{{$root.newEventsAdded}}</b> new activit{{($root.newEventsAdded==1?'y':'ies')}} nearby
+        </button>
+    </div>
+
+    <ion-slide-box controller-bind="$root.$ionicSlideBoxController" show-pager="false" on-slide-changed="slideChanged($index)" active-slide="timePeriod">
+        <ion-slide ng-repeat="i in [0,1,2]">
+            <ion-content style="padding-bottom:10px" delegate-handle="scroll_{i}" ng-show="!$root.showLoader">
+                <div ng-if="$root.sortedEventList[i].length==0 || ($root.finishedLoadingEvents && !$root.sortedEventList[i])" style="text-align:center">
+
+                    <h4 style="color:#444">No activities found nearby :(
+                        <br /><b>Try creating one!</b>
+                    </h4>
+                </div>
+                <div ng-if="$root.alertMessage" style="text-align:center">
+                    <h4 style="color:#444">{{$root.alertMessage}}</h4>
+                </div>
+                <event info="event" eid="event.eid" ng-class="$root.finishedAnimatingEvents && !event.category?'animate':''" ng-repeat="event in $root.sortedEventList[i]" ng-if="!event.hidden"></event>
+            </ion-content>
+        </ion-slide>
+    </ion-slide-box>
+
+    <a class="button button-clear button-light new-event" ng-click="newEvent()">+</a>
+
+</ion-view>

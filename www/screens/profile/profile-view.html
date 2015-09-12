@@ -1,0 +1,60 @@
+<ion-view title="<b>{{($root.user.id==userInfo.$id?'My':'User')}} Profile</b>" hide-back-button="yes">
+
+    <ion-nav-buttons side="left">
+        <button class="button button-icon icon ion-ios7-arrow-back" ng-click="goBack()" style="color:#fff"></button>
+    </ion-nav-buttons>
+
+    <ion-nav-buttons side="right" ng-if="$root.user.id==userInfo.$id">
+        <a class="button button-icon icon ion-gear-b" href="#/settings"></a>
+    </ion-nav-buttons>
+
+    <ion-header-bar class="bar-light bar-subheader" style="text-align:center;font-size:16px;height:33px;background:rgba(255,255,255,.7);z-index:100">
+        {{userDistance}}
+        <span style="font-weight:normal">miles away, {{(userInfo.core.online?'active now':'last online ' +lastOnline)}}
+        </span>
+        <br />
+
+    </ion-header-bar>
+
+    <ion-content style="top:40px;background:#edeae9;padding-bottom:30px !important" scroll="false">
+
+        <img ng-src="{{userInfo.core.pic}}" style="background:rgba(0,0,0,.5);z-index:-1;position:absolute;top:-70px;left:0;left:-3%;width:106%;-webkit-mask-image:-webkit-gradient(linear, left top, left bottom, from(rgba(0,0,0,1)), to(rgba(0,0,0,0)));-webkit-filter: blur(10px);">
+
+        <div style="text-align:center;margin:auto;margin-top:70px;margin-bottom:10px">
+            <img ng-src="{{userInfo.core.pic}}" style="width:120px;height:120px;border-radius:50%" ng-class="userInfo.core.online ? 'user-online' : 'user-offline'" />
+        </div>
+
+        <div class="" style="text-align:center;margin:auto;">
+            <div style="display:inline;font-size:18px;text-shadow:0px 0px 4px #fff;"><b>{{$root.userCache.fullName(uid)}}</b>
+                <br />
+                <span style="font-size:16px">{{userInfo.gender.capitalize()}}{{(userInfo.birthday?', '+formatBirthday(userInfo.birthday)+' years old':'')}}</span>
+            </div>
+        </div>
+
+        <div class="card" style="border:0px">
+            <div class="item item-divider" style="border:0px">
+                Mutual Friends ({{mutualFriends.length}})
+            </div>
+
+            <div class="item item-text-wrap" style="border-width:1px 0px 0px 0px">
+
+                <span href="" ng-repeat="friend in mutualFriends | limitTo:5" ng-init="friendId='facebook:'+friend.id;mutualFriend=$root.userCache.load(friendId)" ng-if="$index < 5">
+                    <img ng-if="$root.users[friendId].thumbnail" ng-src="{{$root.users[friendId].thumbnail}}" style="vertical-align:text-bottom;margin-left:2px;margin-right:2px;width:40px;height:40px;border-radius:50%" ng-class="$root.users[friendId].online ? 'user-online' : 'user-offline'">
+                </span>
+
+            </div>
+        </div>
+
+        <div class="card" style="border:0px">
+            <div class="item item-divider" style="border:0px">
+                Interests
+            </div>
+
+            <div class="item item-text-wrap" style="border-width:1px 0px 0px 0px">
+
+                <span ng-repeat="(tag,bla) in userInfo.tags track by tag" ng-init="loadTagName(tag)" ng-if="bla.checked" style="{{($root.user.tags[tag]?'font-weight:bold':'font-weight:normal')}}">{{$root.tags[tag].name}}{{(!$last?', ':'')}}</span>
+            </div>
+        </div>
+        
+    </ion-content>
+</ion-view>

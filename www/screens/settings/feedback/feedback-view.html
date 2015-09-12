@@ -1,0 +1,19 @@
+<ion-view title="<b>Feedback</b>" hide-back-button="yes">
+
+    <ion-nav-buttons side="left">
+        <button class="button button-icon icon ion-ios7-arrow-back" ng-click="goBack()" style="color:#fff"></button>
+    </ion-nav-buttons>
+
+    <ion-content>
+
+        <div class="padding">
+
+            <textarea ng-model="feedback.msg" placeholder="What do ya think?" ng-trim="false" style="border-radius:2px;font-size:18px;padding:10px;min-height:40px !important;resize:none;margin-bottom:10px;box-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);" msd-elastic rows="4"></textarea>
+
+            <input type="button" class="button button-assertive" value="Send Feedback" style="width:100%" ng-click="sendFeedback()" />
+        </div>
+
+
+    </ion-content>
+
+</ion-view>

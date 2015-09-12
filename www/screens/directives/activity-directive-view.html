@@ -1,0 +1,206 @@
+<div ng-switch on="event.category">
+
+    <div ng-switch-when="true" style="border-bottom:1px solid #ddd;margin:10px;color:rgba(196,20,17,.5);text-shadow:0px 0px 2px rgba(0,0,0,.1)">
+
+        <b>{{event.title}}</b>
+        <!-- <div class="item item-divider item-stable time-header" style="margin-top:10px !important">
+            <div style="width:100%">
+                <hr color="#ddd" size="1">
+                <div class="colortext heading">{{event}}</div>
+            </div>
+        </div> -->
+    </div>
+
+
+    <div ng-switch-default ng-init="$root.userCache.load(event.uid);">
+
+        <div ng-if="detail" class="padding" style="font-size:16px;margin-bottom:-20px;height:56px">
+
+
+            <div style="position:absolute;top:10px;right:15px;color:#fff;text-shadow:0px 0px 4px #000;white-space: nowrap">{{event.getDistance()}} away</div>
+            <a style="text-decoration:none;color:#fff;text-shadow:0px 0px 4px #000;left:62px;top:10px;position:absolute;white-space: nowrap" href="#/user/{{event.uid}}">{{$root.userCache.shortName(event.uid)}}</b>, {{$root.formatAgo(event.timestamp)}}
+
+            </a>
+
+        </div>
+
+        <div class="card" ng-if="!detail" style="background:url(css/tags/{{event.tag}}.jpg);background-size:80px 80px;width:80px;height:80px;float:left;border-top-right-radius:0px;border-bottom-right-radius:0px;margin:0px;margin-left:10px;position:relative;text-align:center" ng-click="likeEvent(event.$id)">
+
+            <span style="background:rgba(0,0,0,.5);position:absolute;left:0px;top:0px;color:#fff;width:100%;height:100%;" ng-show="$root.user.likes[event.$id]">
+                
+                 <div style="display:inline-block;background:#4a87ee;width:100%;color:#fff !important;padding-top:2px;margin-top:-1px;padding-bottom:2px;font-weight:bold;z-index:100">I'm in</div>
+            </span>
+
+           
+
+            <!-- <i class="icon ion-checkmark" style="font-size:40px;color:#fff;text-shadow: 0px 2px 2px #000;opacity.5" ng-show="$root.user.likes[event.$id]"></i>
+            </div> -->
+
+            <span style="background:rgba(0,0,0,.5);position:absolute;left:0px;bottom:0px;color:#fff;width:100%;font-size:12px;text-align:center;font-weight:bold">
+            {{(event.customTime?formattedTime:'')}}
+            </span>
+        </div>
+
+
+        <div class="card" style="padding-top:0px;padding-bottom:0px;background:rgba(255,255,255,0);background-size:100%;{{(detail?'border-bottom-left-radius:0px;border-bottom-right-radius:0px;':'border-top-left-radius:0px;border-bottom-left-radius:0px;')}}margin-top:0px;margin-bottom:12px" id="{{event.$id}}" ng-init="">
+
+            <a ng-if="detail" href="#/user/{{event.uid}}" style="z-index:100;position:absolute;left:16px;top:4px;height:40px;width:40px;background:url({{$root.users[event.uid].thumbnail}});background-size:100%;border-radius:20px;" ng-class="$root.users[event.uid].online ? 'user-online' : 'user-offline'"></a>
+
+
+
+
+
+            <!-- <div style="background-color:rgba(255,255,255,.9);">
+                <div style="height:8px">
+                    <div class="test" style=""></div>
+                </div>
+            </div> -->
+            <!-- 
+            <div ng-if="detail" class="item item-divider" style="border-left:0px;border-top:0px;border-right:0px;opacity:.9 !important;padding-left:4px;padding:7px 6px 6px 6px;margin-bottom:0px !important;">
+                <div class="event-footer-left">
+                    <div style="width:50%;text-align:left;display: inline-block;">
+                        <a href="#/user/{{event.uid}}" class="button button-small button-clear" style="text-decoration:none;font-size:14px;color:#333">
+                            <img class="avatar" style="margin-right:4px;border-radius:13px !important;height:26px;width:26px;" ng-class="$root.users[event.uid].online ? 'user-online' : ''" ng-src="{{$root.users[event.uid].pic}}" />{{$root.users[event.uid].name}},
+                            <span style="font-weight:normal">{{$root.formatAgo(event.timestamp)}}</span>
+                        </a>
+                    </div>
+                </div>
+
+
+            </div> -->
+
+
+            <div class="item item-text-wrap event-description" ng-click="loadEvent(event.$id)" style="font-weight:normal;text-align:left !important;padding-right:12px;padding-left:12px;position:relative;border-radius:2px;border-bottom-left-radius:0px;border-bottom-right-radius:0px;{{(detail?'margin-bottom:1px;padding-bottom:10px;padding-top:10px;':'padding-top:6px;border-top-left-radius:0px !important;padding-bottom:30px;min-height:81px')}};">
+
+
+
+                <div ng-if="event.community" style="background:#aaa;color:#fff;float:right;margin-right:-12px;padding:4px;padding-top:0px;padding-bottom:0px;font-size:12px;white-space: nowrap;{{(detail?'margin-top:-10px':'margin-top:-6px;')}}">{{$root.communities[event.community].shortName}}</div>
+                <div ng-if="event.private" style="background:#aaa;color:#fff;float:right;margin-right:-12px;{{(detail?'margin-top:-10px;':'margin-top:-6px;')}}padding:4px;padding-top:0px;padding-bottom:0px;font-size:12px;white-space: nowrap">Invite Only</div>
+
+                <!--   <div style="float:left;background:url(css/tags/{{event.tag}}.png);background-size:44px 44px;width:44px;height:44px;">
+                    <div style="width:100%;height:100%;border-radius:22px;text-align:center;font-size:12px;color:#fff;text-shadow: 1px 1px #000;margin-top:10px">
+                        {{event.getDistance()}}m
+                    </div>
+
+                </div> -->
+                <!-- <i class="icon ion-quote event-quote-left"></i> -->
+                <div style="font-size:17px !important">
+
+
+                    <ion-scroll id="descriptionbox" ng-if="detail">
+                        {{event.desc}}
+                    </ion-scroll>
+
+                    <div ng-if="!detail" style="max-height:140px;overflow:hidden">
+                        {{event.desc}}
+                    </div>
+
+
+                    <div ng-if="!detail" class="row" style="margin:0px;padding:0px;position:absolute;bottom:-3px;font-size:12px;color:#444">
+                        <div class="col" style="margin:0px;padding:0px;white-space: nowrap">
+                            <b>{{$root.userCache.shortName(event.uid)}}</b>, {{event.getDistance()}}
+                        </div>
+                        <div ng-if="!detail" class="col" style="margin:0px;padding:0px;text-align:right;padding-right:16px;">
+                            <a class="button button-small button-clear button-dark" style="margin-top:-3px;white-space: nowrap;margin-right:-5px;color:#555;opacity:1 !important">
+                                <i class="icon ion-ios7-chatbubble"></i>
+                                <b>{{event.numComments}}</b>
+                            </a>
+                            <a class="button button-small button-clear button-dark" style="margin-top:-3px;white-space: nowrap;color:#555;opacity:1 !important">
+                                <i class="icon ion-ios7-people ion-icon-large"></i>
+                                <b>{{$parent.event.score}}</b>
+                            </a>
+                        </div>
+                    </div>
+                    <!-- 
+                    <div ng-if="!detail" style="position:absolute;bottom:-3px;font-size:12px;margin-top:4px;font-weight:bold;display:table-row;width:100%">
+                        <div style="float:left;display:table-cell;">{{$root.userCache.shortName(event.uid)}}
+                            <span style="font-weight:normal">, {{$root.formatAgo(event.timestamp)}}</span>
+                        </div>
+                        <div style="float:right;display:table-cell;text-align:right;margin-right:16px">
+                            <a class="button button-small button-clear button-dark" href="#/event/{{event.$id}}" style="margin-top:-3px">
+                                <i class="icon ion-ios7-chatbubble "></i>
+                                <b>{{event.numComments}}</b>
+                            </a>
+                            <a class="button button-small button-clear button-dark" ng-click="likeEvent(event.$id)" style="margin-top:-3px">
+                                <i class="icon ion-ios7-people ion-icon-large" ng-class="event.userAttending() ? 'rally-red' : ''"></i>
+                                <b>{{$parent.event.score}}</b>
+                            </a>
+                        </div>
+                    </div> -->
+
+
+                </div>
+                <!-- <i class="icon ion-quote icon-flip event-quote-right"></i>
+                </i> -->
+
+
+
+            </div>
+
+
+
+
+            <a ng-if="detail && event.location.locationFullName" class="item item-divider item-icon-right" style="border-radius:0px !important;font-weight:normal;margin:0px;border-top:0px;border-color:#e9e9e9;border-left:0px;border-right:0px;border-bottom:0px;padding-left:12px !important;padding-top:8px;padding-bottom:8px;background:rgba(255,255,255,.6);font-size:14px;" ng-click="openNativeMaps(event.location.latLong)"> <!--href="#/event/{{event.$id}}/participants/true"-->
+                {{event.location.locationFullName}}<i class="icon ion-chevron-right icon-accessory" style="color:#aaa"></i>
+            </a>
+
+
+            <a ng-if="detail" class="item item-divider item-icon-right" style="border-radius:0px !important;margin:0px;border-top:0px;border-color:#e9e9e9;border-left:0px;border-right:0px;border-bottom:0px;padding-left:12px !important;background:rgba(255,255,255,.6);padding-top:0px;" href="#/event/{{event.$id}}/participants/">
+
+                <div ng-if="event.location.name" style="border-bottom:1px solid #000;margin-right:-42px;opacity:.05;"></div>
+                <div style="padding-bottom:0px;margin-bottom:2px"></div>
+
+                <span style="font-size:14px;">{{event.score}}
+                    <span style="font-weight:normal">{{(event.score==1?'participant':'participants')}}</span>
+                </span>
+
+                <span href="" ng-repeat="(liker,bla) in event.likes | limitTo:5" ng-init="attendee=$root.userCache.load(liker)" ng-if="$index < 5">
+                    <img ng-src="{{$root.users[liker].thumbnail}}" style="vertical-align:text-bottom;margin-bottom:-4px;margin-top:4px;margin-left:2px;margin-right:2px;width:26px;height:26px;border-radius:13px" ng-class="$root.users[liker].online ? 'user-online' : 'user-offline'">
+                </span>
+
+                <i class="icon ion-chevron-right icon-accessory" style="color:#aaa"></i>
+
+
+
+            </a>
+
+
+            <!--     <div ng-if="!detail" class="item item-divider event-footer" style="padding:6px;padding-top:2px;padding-bottom:2px;opacity:.9">
+
+                <div class="event-footer-left">
+                    <div style="width:50%;text-align:left;display: inline-block;">
+                        <a href="#/user/{{event.uid}}" class="button button-small button-clear" style="text-decoration:none;color:#333;">
+                           
+                            This Morning
+                        </a>
+                    </div>
+
+
+                </div>
+
+                <div class="event-footer-middle" style="text-align:right !important">
+
+                    <a class="button button-small button-clear button-dark" href="#/event/{{event.$id}}">
+                        <i class="icon ion-ios7-chatbubble ion-icon-large"></i>
+                        <b>{{event.numComments}}</b>
+                    </a>
+
+
+
+                </div>
+                <div class="event-footer-right">
+                    <a class="button button-small button-clear button-dark" ng-click="likeEvent(event.$id)">
+                        <i class="icon ion-ios7-people ion-icon-large" ng-class="event.userAttending() ? 'rally-red' : ''"></i>
+                        <b>{{$parent.event.score}}</b>
+                    </a>
+
+
+                </div>
+
+            </div> -->
+
+        </div>
+    </div>
+</div>
+
+<div ng-if="detail" style="height:8px"></div>

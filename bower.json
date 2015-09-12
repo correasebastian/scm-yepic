@@ -1,0 +1,38 @@
+{
+  "name": "yepic",
+  "version": "0.0.0",
+  "homepage": "https://github.com/arieltrv/Yepic2",
+  "moduleType": [
+    "node"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "www/lib",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular-animate": "~1.2.17",
+    "angular-elastic": "~2.3.5",
+    "angular-loading-bar": "~0.5.0",
+    "angular-moment": "~0.7.1",
+    "angular-sanitize": "~1.2.17",
+    "angular-ui-router": "0.2.10",
+    "angularfire": "~0.9.0",
+    "collide": "1.0.0-beta.1",
+    "ionic": "driftyco/ionic-bower#1.0.0-beta.13",
+    "ngCordova": "~0.1.4-alpha",
+    "rsvp": "~3.0.8",
+    "underscore": "~1.6.0",
+    "geofire": "~3.2.2",
+    "angular": "~1.4.1",
+    "firebase": "~2.2.7",
+    "angular-google-places-autocomplete": "~0.2.7",
+    "firebase-util": "~0.2.4",
+    "angular-auto-height": "twygmbh/angular-auto-height",
+    "angulartics": "~0.19.0"
+  }
+}

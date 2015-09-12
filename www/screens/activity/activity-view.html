@@ -1,0 +1,75 @@
+<ion-view title="<b>{{formattedStartTime}}</b>" hide-back-button="yes">
+
+    <ion-nav-buttons side="left">
+        <button class="button button-icon icon ion-ios7-arrow-back" ng-click="$root.goBack()"></button>
+    </ion-nav-buttons>
+    <ion-nav-buttons side="right">
+
+        <button class="button button-clear button-icon ion-share" ng-click="shareEvent()">
+        </button>
+    </ion-nav-buttons>
+
+    <ion-content id="detailview" scroll="false" style="background:#edeae9;bottom:42px !important;height:100%">
+
+
+        <img ng-show="event.tag>-1" ng-src="css/tags/{{event.tag}}.jpg" style="background:rgba(0,0,0,.5);z-index:-1;position:absolute;top:-20px;left:-3%;width:106%;-webkit-filter: brightness(90%);-webkit-mask-image:-webkit-gradient(linear, left top, left bottom, from(rgba(0,0,0,1)), to(rgba(0,0,0,0)));">
+
+        <div class="eventInfo" id="eventinfo" style="position:relative;overflow:hidden" ng-class="showFullEvent?'eventInfoFull':''" ng-if="showEventInfo" ng-click="showFullEvent=!showFullEvent">
+
+            <event info="event" detail="event"></event>
+
+            <div class="padding button-bar" style="margin-top:-29px;padding-bottom:4px;" ng-if="$root.user && !archive">
+                <a ng-if="!$root.user.likes[event.$id]" class="button button-balanced icon card" style="border:0px;background:#44a44c;width:100%;border-radius:2px;border-top-left-radius:0px;border-top-right-radius:0px" ng-click="likeEvent()">
+                    </i><b>Count me in</b>
+                </a>
+                <a ng-if="$root.user.likes[event.$id]" class="card button button-positive icon ion-person-add" style="border:0px;padding-left:10px !important;width:60%;{{($root.user.id==event.uid?'border-radius:2px':'')}};border-top-left-radius:0px;border-top-right-radius:0px" href="#/event/{{event.$id}}/invite">
+                    <span style="margin-left:6px">Invite Friends</span>
+                </a>
+                <a ng-if="$root.user.likes[event.$id] && $root.user.id!=event.uid" class="card button button-assertive icon ion-close " style="flex:none;-webkit-flex:none;border:0px;width:40%;border-top-left-radius:0px;border-top-right-radius:0px" ng-click="likeEvent()">
+                    <span style="margin-left:6px">I'm out</span>
+                </a>
+            </div>
+
+            <div class="padding button-bar" style="margin-top:-29px;padding-bottom:4px;" ng-if="archive">
+                <a class="button button-dark icon card" style="border:0px;width:100%;border-radius:2px;border-top-left-radius:0px;border-top-right-radius:0px">This activity has ended.</a>
+            </div>
+
+
+        </div>
+
+
+
+        <div commentbox id="commentdiv" style="position:relative;margin-top:-4px">
+
+            <ion-content delegate-handle="comments">
+
+                <div ng-if="!event.comments" class="padding" style="font-size:16px;opacity:.5">
+                    <center>No comments... {{(archive?'':'yet')}}</center>
+                </div>
+
+                <comment ng-repeat="comment in event.comments" info="comment" event="event" style="margin-top:20px !important" ng-class="$first?'first-comment':''">
+                </comment>
+
+
+                <div style="{{($root.devicePlatform=='iOS'?'height:28px':'height:8px')}}"></div>
+
+            </ion-content>
+
+        </div>
+
+        <div style="height:5px"></div>
+
+    </ion-content>
+
+    <ion-footer-bar keyboard-attach class="item-input-inset" ng-hide="archive || !$root.user" style="height:auto !important;padding-top:2px;padding-bottom:2px;-webkit-box-shadow: 0px -1px 1px 0px rgba(0,0,0,0.25);
+-moz-box-shadow: 0px -1px 1px 0px rgba(0,0,0,0.25);
+box-shadow: 0px -1px 1px 0px rgba(0,0,0,0.25);background:#fff;z-index:10000">
+        <label class="item-input-wrapper" style="background:#fff;padding:0px;margin:0px;border-top:0px !important">
+            <textarea msd-elastic rows="1" placeholder="Say something!" ng-model="comment.msg" style="background:#fff;font-size:16px;padding-top:10px;padding-bottom:10px;min-height:38px !important;resize:none" ng-focus="maximizeComments()" ng-blur="minimizeComments()"></textarea>
+        </label>
+        <button class="button button-clear" style="color:rgb(164, 68, 76)" ng-hide="mc.hideSend" ng-click="addComment(comment)" ng-disabled="!comment.msg">
+            Send
+        </button>
+    </ion-footer-bar>
+
+</ion-view>

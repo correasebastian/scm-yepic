@@ -1,0 +1,26 @@
+<div class="modal" ng-controller="MyEventsCtrl">
+
+    <ion-header-bar class="bar-secondary bar-assertive bar-rally">
+        <button class="button button-clear button-light" style="color:#fff" ng-click="hideMyEvents()">Hide</button>
+
+        <h1 class="title">
+            <b>My Activities</b>
+        </h1>
+
+        <a class="button button-icon icon ion-gear-b" ng-click="loadSettings()"></a>
+
+    </ion-header-bar>
+
+    <ion-content style="background:#edeae9">
+
+        <div ng-if="!$root.userEventList || $root.userEventList.length==0" style="text-align:center">
+            <h4 style="color:#444">You're not attending any activities.
+                <br /><b>How about joining one?</b>
+            </h4>
+        </div>
+
+        <event info="event" eid="event.eid" ng-repeat="event in $root.userEventList[0].concat($root.userEventList[1]).concat($root.userEventList[2])" ng-if="!event.hidden"></event>
+
+    </ion-content>
+
+</div>
