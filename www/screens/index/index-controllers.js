@@ -74,26 +74,27 @@ angular.module('index-controllers', ['firebase'])
             $rootScope.userEvents = [];
 
             // add to 'my activities' if new acitivity appears in firebase
-            settings.fbRef.child('users/' + $rootScope.user.id + '/likes').startAt(Date.now() + $rootScope.serverOffset).on('child_added', function(snap) {
-                var eventDetails = Event(snap.key(), true);
-                eventDetails.$loaded(function() {
-                    if (settings.lowBandwidthMode)
-                        eventDetails.$inst().$ref().off();
-                    if (eventDetails.endTime > Date.now() + $rootScope.serverOffset) {
-                        $rootScope.userEvents.push(eventDetails);
-                        $rootScope.userEvents.sort(function(a, b) {
-                            if (a.startTime > b.startTime) {
-                                return 1;
-                            } else if (a.startTime < b.startTime) {
-                                return -1;
-                            }
+            settings.fbRef.child('users/' + $rootScope.user.id + '/likes')
+                .startAt(Date.now() + $rootScope.serverOffset).on('child_added', function(snap) {
+                    var eventDetails = Event(snap.key(), true);
+                    eventDetails.$loaded(function() {
+                        if (settings.lowBandwidthMode)
+                            eventDetails.$inst().$ref().off();
+                        if (eventDetails.endTime > Date.now() + $rootScope.serverOffset) {
+                            $rootScope.userEvents.push(eventDetails);
+                            $rootScope.userEvents.sort(function(a, b) {
+                                if (a.startTime > b.startTime) {
+                                    return 1;
+                                } else if (a.startTime < b.startTime) {
+                                    return -1;
+                                }
 
-                            return 0;
-                        });
-                    }
+                                return 0;
+                            });
+                        }
 
+                    });
                 });
-            });
 
             //remove from 'my activities' if new activity removed from firebase
             // settings.fbRef.child('users/' + $rootScope.user.id + '/likes').on('child_removed', function(snap) {
@@ -156,13 +157,11 @@ angular.module('index-controllers', ['firebase'])
     $scope.loadEvent = function(id) {
         $window.location.href = '#/event/' + id;
     };
+    $scope.openNativeMaps = function(destination) {
+        var start = [$rootScope.user.location.latitude, $rootScope.user.location.longitude];
+        launchnavigator.navigate(destination, start);
+    };
 
-        $scope.openNativeMaps = function(destination){
-            var start = [$rootScope.user.location.latitude,$rootScope.user.location.longitude];
-            launchnavigator.navigate(destination, start);
-        };
 
     $scope.formattedTime = DateTimeManager.formatCustomStart($scope.event.startTime, $scope.event.endTime);
 });
-
-

@@ -1,0 +1,93 @@
+[ {
+  "name" : "Random Fun"
+}, {
+  "keywords" : "sports, sport",
+  "name" : "Sports"
+}, {
+  "keywords" : "concert, jam, guitar, drums, listen, tune, tunes, mosh, music",
+  "name" : "Music"
+}, {
+  "keywords" : "drinks, drink, beer, vodka, bar, bars, happy hour, nightlife",
+  "name" : "Drinks & Nightlife"
+}, {
+  "keywords" : "food, eat, mexican, italian, hungry, pizza, chipotle, burrito, burritos, snack",
+  "name" : "Food"
+}, {
+  "keywords" : "blast, party, rage, rager, fest, loud, BYOB, parties",
+  "name" : "Parties"
+}, {
+  "keywords" : "coffee, tea, starbucks",
+  "name" : "Coffee"
+}, {
+  "keywords" : "Give back, volunteering, volunteers, volunteer, nonprofit, non-profit, help, give back, Habitat, Food Bank, Big Brother, Charity, service, help, fundraise, cause",
+  "name" : "Volunteering"
+}, {
+  "keywords" : "Basketball, hoops, shoot, 5 on 5, bball, b-ball, b ball, swish, dribble, lebron, jordan, nba, dunk",
+  "name" : "Basketball"
+}, {
+  "keywords" : "Rally, protest, riot, revolution, take a stand, boycott, flash mob, rise, rebel",
+  "name" : "Protest"
+}, {
+  "keywords" : "Church, Synagogue, Mosque, Shul, Prayer, Services, Worship, Jesus",
+  "name" : "Religious"
+}, {
+  "keywords" : "Soccer, Beautiful Sport, Goal",
+  "name" : "Soccer"
+}, {
+  "keywords" : "Toss, Frisbee, Frisby, Disc, Disk, Throw, Ultimate",
+  "name" : "Frisbee"
+}, {
+  "keywords" : "Football, Gridiron, QB, RB, Pigskin",
+  "name" : "Football"
+}, {
+  "keywords" : "Bowling, Bowl, Pins, Lane",
+  "name" : "Bowling"
+}, {
+  "keywords" : "Lift, Workout, Work out, gym, exercise, bench, squat, fitness, push ups, pull ups, Weights",
+  "name" : "Workout"
+}, {
+  "keywords" : "Jog, Run, Marathon, Running, Walking, 5K, 10K, Walk, Sprint, Dash",
+  "name" : "Running"
+}, {
+  "keywords" : "Speaks, Speak, Lecture, Lectures, Author, Renowned, Learn, Teach, Hear, Discover, Course, Professor, Teacher, Lecturer, Discuss",
+  "name" : "Lecture and Workshop"
+}, {
+  "keywords" : "Explore, Discover, Adventure, Urban, Risky, Flashlight, Adrenaline, Fast-paced, Jump, Climb, Kayak, Beach, Roller coaster, Amusement park, Park, Parkour, Stunt, Stunts, Adventures",
+  "name" : "Adventure"
+}, {
+  "keywords" : "Forest, Hiking, Hike, Walking, Camping, camp, climb, climbing, nature, tree, Walk, Woods, Mountains, Metropark, Metroparks, Stroll",
+  "name" : "Nature"
+}, {
+  "keywords" : "Chill, Hangout, Meeting, Meet, group, Hang, Business",
+  "name" : "Meeting"
+}, {
+  "keywords" : "Tennis, Racquetball, Racquet, hit, tennis ball, tennis balls",
+  "name" : "Tennis"
+}, {
+  "keywords" : "Ski, Snowboard, Snow, Skiing, Snowboarding, Sled, Sledding, Downhill, Steep, Hill",
+  "name" : "Winter Sports"
+}, {
+  "keywords" : "Read, book, novel, fiction, non-fiction, reading",
+  "name" : "Book Club"
+}, {
+  "keywords" : "Watch, Film, Hollywood, Movie, Flick, Netflix, Hulu, Cable, Channel, Antenna, Documentary, TV, Television",
+  "name" : "Movies & TV"
+}, {
+  "keywords" : "Photos, Video, Photo, Photography, Videos, Videography, Portraits",
+  "name" : "Photography"
+}, {
+  "keywords" : "Computer, Code, Coding, App, iOS, Android, Develop, Hack, Hacking, Tech",
+  "name" : "Hacking"
+}, {
+  "keywords" : "Republican, Republicans, Democrat, Democrats, Independent, Independents, Politics, Vote, Ballot, Election, Libertarian, Conservative, Liberal",
+  "name" : "Politics"
+}, {
+  "keywords" : "Date, Dating, Babe, Romance, Romantic, Dates, Ladies, Gentleman, Bae",
+  "name" : "Dating"
+}, {
+  "keywords" : "Musical, Performance, Extravaganza, Dance, Show, Display, Theater, Theatre, Perform, Act, Actor, Actress, Curtains",
+  "name" : "Shows"
+}, {
+  "keywords" : "Rocket, Instructables, DIY, Do it yourself, Experiment, Science, Experiments",
+  "name" : "Science Experiments"
+} ]

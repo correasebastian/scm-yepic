@@ -80,6 +80,7 @@ angular.module('app-services', ['ionic'])
                     if (connectedSnap.val() === true) {
                         $rootScope.firebaseConnected = true;
                     } else {
+                        //TODO: SCM chech method 
                         $rootScope.firebaseConnected = false;
                         Firebase.goOnline();
                     }

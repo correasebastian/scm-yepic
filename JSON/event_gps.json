@@ -1,0 +1,28 @@
+{
+  ".priority" : 1.4435676E12,
+  "customTime" : false,
+  "desc" : "first event",
+  "endTime" : 1443567600000,
+  "likes" : {
+    "facebook:10206981629155879" : {
+      ".priority" : 1443536042495,
+      "timestamp" : 1443536042495
+    }
+  },
+  "location" : {
+    "description" : "63b1-63b61 Cl. 42",
+    "generalLocation" : "Medellín",
+    "latLong" : [ 6.2441887, -75.581221 ],
+    "latitude" : 6.2441887,
+    "locationFullName" : "Cl. 42 #63b-1 a 63b-61, Medellín, Medellín, Antioquia, Colombia",
+    "locationName" : "63b1-63b61",
+    "longitude" : -75.581221
+  },
+  "numComments" : 0,
+  "private" : false,
+  "score" : 1,
+  "startTime" : 1443546000000,
+  "tag" : "0",
+  "timestamp" : 1443536033514,
+  "uid" : "facebook:10206981629155879"
+}

@@ -203,7 +203,7 @@ angular.module('new-activity-controllers', ['firebase'])
         $scope.event.location.description = $scope.data.googleLocation.address_components[0].short_name + ' ' + $scope.data.googleLocation.address_components[1].short_name;
 
         // General Location
-        $scope.event.location.generalLocation = $scope.data.googleLocation.address_components[3].long_name;
+        $scope.event.location.generalLocation = $scope.data.googleLocation.address_components[3].long_name || $scope.data.googleLocation.address_components[2].long_name ||  $scope.data.googleLocation.address_components[1].long_name || '';
     };
 
     $scope.getAddress = function(coords) {
@@ -325,6 +325,8 @@ angular.module('new-activity-controllers', ['firebase'])
             event.location = $scope.event.location
 
             $scope.creatingEvent = true;
+
+            console.log(event, angular.toJson(event));
 
             var ref = eventsRef.push(event, function() {
                 $scope.creatingEvent = false;

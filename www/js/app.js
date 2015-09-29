@@ -1,14 +1,12 @@
 var resumeLocation = '';
 var justResumed = false;
+var R = null;
 
 // we call this when the user logs out, so they don't receive push notifications
 function killPushwoosh() {
     var pushNotification = window.plugins.pushNotification;
-    pushNotification.unregisterDevice(
-        function(status) {
-        },
-        function(status) {
-        }
+    pushNotification.unregisterDevice(function(status) {},
+        function(status) {}
     );
 }
 
@@ -39,15 +37,20 @@ angular.module('yepic', ['ionic', 'app-config', 'app-directives', 'app-filters',
 
 // settings, mostly just firebase
 .constant('settings', {
-    fbRoot: 'https://sizzling-fire-2797.firebaseio.com/',
-    fbRef: new Firebase('https://sizzling-fire-2797.firebaseio.com/'),
+    // fbRoot: 'https://sizzling-fire-2797.firebaseio.com/',
+    //     fbRef: new Firebase('https://sizzling-fire-2797.firebaseio.com/'),
+    // fbRoot: 'https://torrid-torch-646.firebaseio.com/',
+    fbRoot: 'https://scmyepic.firebaseio.com/',
+    fbRef: new Firebase('https://scmyepic.firebaseio.com/'),
+
     lowBandwidthMode: false
 })
 
 .run(function($ionicPlatform, $rootScope, $cordovaGoogleAnalytics, $ionicSideMenuDelegate, $firebase, $window, $ionicLoading, $state, PresenceService, EventService, UserService, userCache, $location, settings, NotificationService, $cordovaPush, $ionicNavBarDelegate, ContactManager, $http, $filter) {
 
+    R = $rootScope;
     // initiates the pushwoosh plugin
-    function initPushwoosh( user ) {
+    function initPushwoosh(user) {
         var pushNotification = window.plugins.pushNotification;
 
         document.addEventListener('push-notification', function(event) {
@@ -68,16 +71,15 @@ angular.module('yepic', ['ionic', 'app-config', 'app-directives', 'app-filters',
             function(status) {
                 var deviceToken = null;
 
-                if( status.deviceToken ) {
+                if (status.deviceToken) {
                     // iOS
-                    settings.fbRef.child('users/' + user.uid + '/core/device').set( status.deviceToken );    
+                    settings.fbRef.child('users/' + user.uid + '/core/device').set(status.deviceToken);
                 } else {
                     // Android
-                    settings.fbRef.child('users/' + user.uid + '/core/device').set( status );    
+                    settings.fbRef.child('users/' + user.uid + '/core/device').set(status);
                 }
             },
-            function(status) {
-            }
+            function(status) {}
         );
 
         //pushNotification.setApplicationIconBadgeNumber(0);
@@ -175,7 +177,7 @@ angular.module('yepic', ['ionic', 'app-config', 'app-directives', 'app-filters',
 
         $rootScope.auth = settings.fbRef.getAuth();
 
-        $rootScope.authHappened = function( authData ) {
+        $rootScope.authHappened = function(authData) {
             if (authData) {
                 var user = authData;
 
@@ -189,14 +191,18 @@ angular.module('yepic', ['ionic', 'app-config', 'app-directives', 'app-filters',
                     var friends = {};
 
                     // loop thru friends and add friends to firebase db
-                    for (var i=0;i<$rootScope.userFriends.length;i++){
-                        friends['facebook:'+$rootScope.userFriends[i].id]={exists:true};
+                    for (var i = 0; i < $rootScope.userFriends.length; i++) {
+                        friends['facebook:' + $rootScope.userFriends[i].id] = {
+                            exists: true
+                        };
                     }
                     $rootScope.userFriendsIndexed = friends;
-                    settings.fbRef.child('users/'+user.uid).update({friends:friends});
+                    settings.fbRef.child('users/' + user.uid).update({
+                        friends: friends
+                    });
                 }).
                 error(function(data, status, headers, config) {
-                    console.error( data );
+                    console.error(data);
                 });
 
 
@@ -204,7 +210,7 @@ angular.module('yepic', ['ionic', 'app-config', 'app-directives', 'app-filters',
 
                     $cordovaGoogleAnalytics.startTrackerWithId('UA-576458-9');
 
-                    initPushwoosh( user );
+                    initPushwoosh(user);
                 }
 
                 userCache.load(user.uid);
@@ -250,7 +256,13 @@ angular.module('yepic', ['ionic', 'app-config', 'app-directives', 'app-filters',
                 $rootScope.hide();
                 settings.fbRef.child('users/' + user.uid).once('value', function(snap) {
                     if (!snap.val().hasRegistered) {
-                        settings.fbRef.child('users/' + user.uid).update({hasRegistered:true,location:{latitude:41.4995,longitude:-81.69541}});
+                        settings.fbRef.child('users/' + user.uid).update({
+                            hasRegistered: true,
+                            location: {
+                                latitude: 41.4995,
+                                longitude: -81.69541
+                            }
+                        });
                         $state.go('tags');
                     } else {
                         if ($state.current.name == 'auth') {
@@ -263,13 +275,13 @@ angular.module('yepic', ['ionic', 'app-config', 'app-directives', 'app-filters',
                     killPushwoosh();
                 $rootScope.loggedOut = true;
                 $rootScope.user = null;
-                    $state.go('auth');
+                $state.go('auth');
             }
         };
 
         // if the user logs in
         settings.fbRef.onAuth(function(authData) {
-            $rootScope.authHappened( authData );
+            $rootScope.authHappened(authData);
         });
         $rootScope.userNotificationService = NotificationService;
 

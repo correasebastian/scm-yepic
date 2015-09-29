@@ -1,8 +1,13 @@
 angular.module('interests-controllers', ['firebase'])
 
 .controller('TagsCtrl', function($scope, $rootScope, $firebase, $state, settings) {
+    console.log($rootScope)
+
+    console.log('tags', angular.toJson($rootScope.tags))
+    console.log('communities', angular.toJson($rootScope.communities))
 
     $rootScope.showLoader = false;
+
 
     settings.fbRef.child('users/' + $rootScope.user.id + '/tags').once('value', function(snap) {
         if (snap.val() !== null) {

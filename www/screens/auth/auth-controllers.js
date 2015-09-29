@@ -1,6 +1,6 @@
 angular.module('auth-controllers', ['firebase'])
 
-.controller('AuthCtrl', function($scope, $rootScope, $cordovaGoogleAnalytics, settings) {
+.controller('AuthCtrl', function($scope, $rootScope, $cordovaGoogleAnalytics, settings,$state) {
 
     if (window.device) {
         $cordovaGoogleAnalytics.trackView('auth');
@@ -9,7 +9,10 @@ angular.module('auth-controllers', ['firebase'])
     $scope.login = function(provider) {
 
         if (!window.cordova) {
-            settings.fbRef.authWithOAuthPopup(provider, function(error, authData) {}, {
+            settings.fbRef.authWithOAuthPopup(provider, function(error, authData) {
+
+                console.log('objeto autenticado', authData)
+            }, {
                 scope: "public_profile,email,user_friends,user_birthday,user_likes,user_about_me,user_events"
             });
         } else {

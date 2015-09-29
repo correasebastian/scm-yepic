@@ -16,8 +16,10 @@ angular.module('ion-google-place', [])
                     addressInfo: '=address'
                 },
                 link: function(scope, element, attrs, ngModel) {
+
+                    console.log(scope,attrs);
                     scope.locations = [{
-                        description: 'Current Location'
+                        formatted_address: 'Current Location'
                     }];
                     var geocoder = new google.maps.Geocoder();
                     var autocompleteService = new google.maps.places.AutocompleteService();
@@ -37,8 +39,10 @@ angular.module('ion-google-place', [])
                         '</div>',
                         '<ion-content class="has-header has-header">',
                         '<ion-list>',
-                        '<ion-item style="margin:5px" ng-repeat="location in locations" type="item-text-wrap" ng-click="selectLocation(location)" ng-class="location.description==\'Current Location\'?\'item-positive\':\'\'">',
-                        '<span >{{location.description}}</span>',
+                        '<ion-item style="margin:5px" ng-repeat="location in locations" type="item-text-wrap" ng-click="selectLocation(location)" ng-class="location.formatted_address==\'Current Location\'?\'item-positive\':\'\'">',
+                        // '<span >{{location.description}}</span>',
+                        // todo SCM
+                         '<span >{{location.formatted_address}}</span>',
                         '</ion-item>',
                         '</ion-list>',
                         '</ion-content>',
@@ -55,9 +59,10 @@ angular.module('ion-google-place', [])
                         var searchInputElement = angular.element(el.element.find('input'));
 
                         scope.selectLocation = function(location) {
-
-
                             ngModel.$setViewValue(location);
+                            console.log(scope.addressInfo)
+                            scope.addressInfo=location.address_components;
+                            // addressInfo=Location.address_components
                             ngModel.$render();
                             el.element.css('display', 'none');
                             $ionicBackdrop.release();
@@ -69,17 +74,18 @@ angular.module('ion-google-place', [])
                                 if (!query) return;
                                 if (query.length < 3);
 
-                                autocompleteService.getPlacePredictions({
-                                    input: query
-                                }, function(results, status) {
+                                // autocompleteService.getPlacePredictions({input: query}, function(results, status) {
 
-                                    // geocoder.geocode({ address: query }, function(results, status) {
+                                geocoder.geocode({
+                                    address: query
+                                }, function(results, status) {
                                     if (status == google.maps.places.PlacesServiceStatus.OK) {
                                         scope.$apply(function() {
                                             scope.locations = results;
-                                            scope.locations.push({
-                                                description: 'Current Location'
+                                            scope.locations.push({                                               
+                                                formatted_address: 'Current Location'
                                             });
+
                                         });
                                     } else {
                                         // @TODO: Figure out what to do when the geocoding fails
@@ -94,7 +100,7 @@ angular.module('ion-google-place', [])
                             $ionicBackdrop.retain();
                             el.element.css('display', 'block');
                             searchInputElement[0].focus();
-                            $rootScope.showLocationPicker=true;
+                            $rootScope.showLocationPicker = true;
                             setTimeout(function() {
                                 searchInputElement[0].focus();
                             }, 0);
@@ -104,7 +110,7 @@ angular.module('ion-google-place', [])
                             scope.searchQuery = '';
                             $ionicBackdrop.release();
                             el.element.css('display', 'none');
-                            $rootScope.showLocationPicker=false;
+                            $rootScope.showLocationPicker = false;
                         };
 
                         element.bind('click', onClick);
@@ -120,7 +126,7 @@ angular.module('ion-google-place', [])
                             } else {
                                 element[0].children[1].innerHTML = 'Locating...';
                             }
-                        }else{
+                        } else {
                             element[0].children[1].innerHTML = 'Locating...';
                         }
                     });
@@ -141,7 +147,7 @@ angular.module('ion-google-place', [])
 
                     ngModel.$render = function() {
                         if (!ngModel.$viewValue.terms) {
-                            if (ngModel.$viewValue.description == 'Current Location') {
+                            if (ngModel.$viewValue.formatted_address == 'Current Location') {
                                 var displayValue = scope.addressInfo[0].short_name + ' ' + scope.addressInfo[1].short_name;
                                 ngModel.$viewValue.locationName = displayValue;
                                 ngModel.$viewValue.locationFullName = displayValue + ', ' + scope.addressInfo[3].short_name + ' ' + scope.addressInfo[4].short_name;
@@ -155,7 +161,7 @@ angular.module('ion-google-place', [])
                                 displayValue = ngModel.$viewValue.terms[0].value + ' ' + ngModel.$viewValue.terms[1].value + ', ' + ngModel.$viewValue.terms[2].value;
                             }
                             ngModel.$viewValue.locationName = displayValue;
-                            ngModel.$viewValue.locationFullName = ngModel.$viewValue.description;
+                            ngModel.$viewValue.locationFullName = ngModel.$viewValue.formatted_address;
                             element[0].children[1].innerHTML = displayValue || '';
                         }
                     };
