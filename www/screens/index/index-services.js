@@ -1,8 +1,8 @@
 angular.module("index-services", [])
 
 // event factory which extends firebase object
-.factory("Event", ["$FirebaseObject", "$firebase", "$rootScope", "settings", "User", '$firebaseUtils',
-    function($FirebaseObject, $firebase, $rootScope, settings, EventService, User, $firebaseUtils) {
+.factory("Event", ["$FirebaseObject", "$firebase", "$rootScope", "settings", "User", '$firebaseUtils','L',
+    function($FirebaseObject, $firebase, $rootScope, settings, EventService, User, $firebaseUtils,L) {
 
         var finishedLoadingEvents = false;
         var EventFactory = $FirebaseObject.$extendFactory({
@@ -10,10 +10,20 @@ angular.module("index-services", [])
             // return the distance from user of activity
             getDistance: function() {
                 try {
-                    var distance = GeoFire.distance([this.location.latitude, this.location.longitude], [$rootScope.user.location.latitude, $rootScope.user.location.longitude]);
+                    // console.log('e.location',this.location);
+
+                    //TODO SCM
+
+                    // var distance = GeoFire.distance([this.location.latitude, this.location.longitude], [$rootScope.user.location.latitude, $rootScope.user.location.longitude]);
+                    var distance = GeoFire.distance([this.location.latitude, this.location.longitude], [6.244203,-75.5812119 ]);
+                   //return disctance in km
+                    // distance = distance.toFixed(1) + ' mi';
+                    distance = distance *0.621371
                     distance = distance.toFixed(1) + ' mi';
+
                     return distance;
-                } catch( ex ) {
+                } catch (ex) {
+                    // L.l('ERROR', ex)
                     return 'n/a';
                 }
             },
@@ -51,9 +61,9 @@ angular.module("index-services", [])
 ])
 
 
-.factory('EventService', ['$rootScope', '$firebase', '$cordovaGeolocation', 'NotificationService', 'PresenceService', '$filter', 'settings', 'Event', '$timeout',
+.factory('EventService', ['$rootScope', '$firebase', '$cordovaGeolocation', 'NotificationService', 'PresenceService', '$filter', 'settings', 'Event', '$timeout', 'L',
 
-    function($rootScope, $firebase, $cordovaGeolocation, NotificationService, PresenceService, $filter, settings, Event, $timeout) {
+    function($rootScope, $firebase, $cordovaGeolocation, NotificationService, PresenceService, $filter, settings, Event, $timeout, L) {
 
         // function to use with javascript sort that sorts by activity start time
         function timestampSort(a, b) {
@@ -76,6 +86,7 @@ angular.module("index-services", [])
         $rootScope.loadedFirstEvent = false;
         $rootScope.finishedAnimatingEvents = false;
         $rootScope.alertMessage = '';
+        // TODO SCM PUEDE SER UN ALISTA INMENSA, ENTONCES DEBE RESTINGIRSE PUEDE SE POR TIEMPOS TAMBIEN 
         var geoFire = new GeoFire(settings.fbRef.child('geo'));
         $rootScope.newEventsAdded = 0;
 
@@ -181,7 +192,7 @@ angular.module("index-services", [])
                     });
 
                 });
-    
+
                 // function that watches the user's community, and if it changes, loads all current activites that are part of that community
                 $rootScope.$watch('user.community', function(newVal, oldVal) {
                     if (newVal) {
@@ -205,6 +216,10 @@ angular.module("index-services", [])
                 // geoquery found a new activity within our search radius!
                 newEventFound = function(key, location, distance) {
 
+                    L.l('newEventFound', key)
+                    L.l('newEventFound location', location)
+                    L.l('newEventFound distance', distance)
+
                     finishedLoadingEvents = $rootScope.finishedLoadingEvents;
 
                     // initiate load activity details from firebase
@@ -212,9 +227,11 @@ angular.module("index-services", [])
 
                     // increment number of activities found, to determine when to hide the loader (when the number of activities found matches the number of activities loaded)
                     numFound++;
+                    L.l('numFound', numFound)
 
                     // callback when activity details are loaded from firebase
                     eventDetails.$loaded(function() {
+                        L.l('newEventFound eventDetails', eventDetails)
 
                         // array that references activities by their id
                         $rootScope.eventHash[eventDetails.$id] = eventDetails;
@@ -229,7 +246,18 @@ angular.module("index-services", [])
                         var filterEventsNow = true;
 
                         // if we found a current activity
-                        if (eventDetails.endTime >= moment().unix() * 1000) {
+                        //TODO SCM
+                        // if (eventDetails.endTime >= moment().unix() * 1000) {
+                        L.l('eventDetails.endTime', eventDetails.endTime)
+                        var myDate = new Date(eventDetails.endTime);
+                        var formatedTime = myDate.toJSON();
+                        var m=new Date(moment().hours(-72).unix() * 1000)
+                        // L.l('myDate', myDate)
+                        // L.l('formatedTime', formatedTime)
+
+                        console.log(myDate,m  , (eventDetails.endTime >= moment().hours(-72).unix() * 1000) ? true:false )
+                        if (eventDetails.endTime >= moment().hours(-72).unix() * 1000) {
+
 
                             // add activity to activity list, sorted and shown on homescreen
                             $rootScope.eventList.push(eventDetails);
@@ -297,7 +325,7 @@ angular.module("index-services", [])
 
                                 NotificationService.addUserJoinedNotification(id, $rootScope.user.id);
 
-                            // if they have already liked the acitivy, remove a like
+                                // if they have already liked the acitivy, remove a like
                             } else {
                                 userLikeRef.remove(function() {
                                     settings.fbRef.child('events/' + id + '/likes').once('value', function(snap) {

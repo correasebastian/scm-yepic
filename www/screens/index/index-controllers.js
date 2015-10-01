@@ -1,6 +1,10 @@
 angular.module('index-controllers', ['firebase'])
 
-.controller('EventIndexCtrl', function($scope, $filter, $rootScope, $cordovaGoogleAnalytics, Event, $firebase, $ionicModal, $timeout, $ionicSideMenuDelegate, UserService, userCache, $ionicNavBarDelegate, $window, $cordovaGeolocation, PresenceService, EventService, $state, $ionicPopup, $ionicPopover, settings, $ionicScrollDelegate, $ionicSlideBoxDelegate) {
+.controller('EventIndexCtrl', 
+    function($scope, $filter, $rootScope, $cordovaGoogleAnalytics, Event,
+     $firebase, $ionicModal, $timeout, $ionicSideMenuDelegate, UserService, 
+     userCache, $ionicNavBarDelegate, $window, $cordovaGeolocation, PresenceService,
+      EventService, $state, $ionicPopup, $ionicPopover, settings, $ionicScrollDelegate, $ionicSlideBoxDelegate,L) {
 
     // google analytics tracking
     if (window.device) {
@@ -77,7 +81,9 @@ angular.module('index-controllers', ['firebase'])
             settings.fbRef.child('users/' + $rootScope.user.id + '/likes')
                 .startAt(Date.now() + $rootScope.serverOffset).on('child_added', function(snap) {
                     var eventDetails = Event(snap.key(), true);
-                    eventDetails.$loaded(function() {
+                    eventDetails.$loaded(function(err,res) {
+                        L.l('err',err)
+                        L.l('res', res)
                         if (settings.lowBandwidthMode)
                             eventDetails.$inst().$ref().off();
                         if (eventDetails.endTime > Date.now() + $rootScope.serverOffset) {
@@ -125,12 +131,15 @@ angular.module('index-controllers', ['firebase'])
     $rootScope.$watch('finishedSortingEvents', function(newVal, oldVal) {
         if (newVal && newVal != oldVal) {
             $rootScope.showLoader = false;
+            //TODO SCM
+            $rootScope.timePeriod = 1;
+            $ionicSlideBoxDelegate.slide(1,1);
         }
     });
 
 
     // the names we give the 3 different categories on index
-    $scope.timePeriodNames = ['Today', 'Tomorrow', 'Later'];
+    $scope.timePeriodNames = ['Yesterday','Today', 'Tomorrow', 'Later'];
     $scope.selectedFeed = 0;
 
 

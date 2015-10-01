@@ -24,16 +24,26 @@ String.prototype.capitalize = function() {
 
 angular.module('yepic', ['ionic', 'app-config', 'app-directives', 'app-filters', 'new-activity-controllers', 'my-activities-controllers', 'app-services', 'auth-controllers', 'index-controllers', 'notifications-controllers', 'profile-controllers', 'index-services', 'activity-controllers', 'index-filters', 'notifications-services', 'profile-services', 'invite-controllers', 'participants-controllers', 'settings-controllers', 'interests-controllers', 'feedback-controllers', 'invite-services', 'angularMoment', 'ngCordova', 'monospaced.elastic', 'ion-google-place', 'twygmbh.auto-height', 'angulartics', 'angulartics.google.analytics.cordova'])
 
-.directive('disableTap', function($timeout) {
-    return {
-        link: function() {
+.factory('L', ['$log', function($log) {
+        var fact = {
 
-            $timeout(function() {
-                document.querySelector('.pac-container').setAttribute('data-tap-disabled', 'true');
-            }, 500);
-        }
-    };
-})
+            l: function(msg, data) {
+                $log.info(msg, (data) ? data : '');
+            }
+        };
+
+        return fact;
+    }])
+    .directive('disableTap', function($timeout) {
+        return {
+            link: function() {
+
+                $timeout(function() {
+                    document.querySelector('.pac-container').setAttribute('data-tap-disabled', 'true');
+                }, 500);
+            }
+        };
+    })
 
 // settings, mostly just firebase
 .constant('settings', {
@@ -46,7 +56,7 @@ angular.module('yepic', ['ionic', 'app-config', 'app-directives', 'app-filters',
     lowBandwidthMode: false
 })
 
-.run(function($ionicPlatform, $rootScope, $cordovaGoogleAnalytics, $ionicSideMenuDelegate, $firebase, $window, $ionicLoading, $state, PresenceService, EventService, UserService, userCache, $location, settings, NotificationService, $cordovaPush, $ionicNavBarDelegate, ContactManager, $http, $filter) {
+.run(function($ionicPlatform, $rootScope, $cordovaGoogleAnalytics, $ionicSideMenuDelegate, $firebase, $window, $ionicLoading, $state, PresenceService, EventService, UserService, userCache, $location, settings, NotificationService, $cordovaPush, $ionicNavBarDelegate, ContactManager, $http, $filter, L) {
 
     R = $rootScope;
     // initiates the pushwoosh plugin
@@ -123,11 +133,16 @@ angular.module('yepic', ['ionic', 'app-config', 'app-directives', 'app-filters',
         $rootScope.serverOffset = 0;
         var offsetRef = settings.fbRef.child('.info/serverTimeOffset');
         offsetRef.on('value', function(snap) {
+            L.l(' settings.fbRef.child(.info/serverTimeOffset)', snap.val())
             $rootScope.serverOffset = snap.val();
         });
 
         // if the sort options change (they never will in this version), update the event list accordingly
         $rootScope.$watch('sortOptions', function(newVal, oldVal) {
+            L.l(' $rootScope.$watch(sortOptions', {
+                'newVal': newVal,
+                'oldVal': oldVal
+            });
             if (oldVal) {
                 if (newVal.radius != oldVal.radius) {
                     EventService.updateRadius();
@@ -141,6 +156,11 @@ angular.module('yepic', ['ionic', 'app-config', 'app-directives', 'app-filters',
         $rootScope.previousState;
         $rootScope.currentState;
         $rootScope.$on('$stateChangeSuccess', function(ev, to, toParams, from, fromParams) {
+
+            L.l('$rootScope.$on($stateChangeSuccess', {
+                'from': from.name,
+                'to': to.name
+            });
             $rootScope.previousState = from.name;
             $rootScope.currentState = to.name;
         });
@@ -168,6 +188,7 @@ angular.module('yepic', ['ionic', 'app-config', 'app-directives', 'app-filters',
         };
 
         $rootScope.user = null;
+        L.l('$rootScope.user', $rootScope.user)
 
         $rootScope.getObjectSize = function(obj) {
             if (!obj)
@@ -176,8 +197,11 @@ angular.module('yepic', ['ionic', 'app-config', 'app-directives', 'app-filters',
         };
 
         $rootScope.auth = settings.fbRef.getAuth();
+        L.l('$rootScope.auth = settings.fbRef.getAuth();', $rootScope.auth)
+
 
         $rootScope.authHappened = function(authData) {
+            L.l('R.authHappened(R.auth)');
             if (authData) {
                 var user = authData;
 

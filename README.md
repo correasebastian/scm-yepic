@@ -107,3 +107,42 @@ FIREBASE WARNING: Using an unspecified index. Consider adding ".indexOn": "g" at
 ------------------------------rootscope
 
  e= angular.element($0); s=e.scope(); r=s.$parent;
+
+ -----------------
+
+ lo que se lista en eventos no son todos los que yo creo sino los que estan cerca asi no los haya creado yo
+
+ y esta dado por este evento
+ var geoQueryKeyEnter = geoQuery.on('key_entered', newEventFound);
+ newEventFound
+
+ --------------------
+ asignacion de location para el usuario
+
+ $rootScope.user.location.latitude , no esta teniendo nada y esta es la informacion del /users , depronto la podriamos obtener de users_geo
+
+
+ -------------------------------------
+
+ el=R.eventList
+
+ f= function(o,k){
+ console.log(o.desc, new Date(o.endTime))
+ }
+ angular.forEach(el,f)
+
+ sel=R.sortedEventList
+ sf= function(o,k){
+  
+ if (o.length>1){
+console.log(k)
+angular.forEach(o,function(a,i){
+if(a.desc){
+	console.log(a.desc, new Date(a.endTime))
+}
+ 
+ })
+ }
+ 
+ }
+ angular.forEach(sel,sf)

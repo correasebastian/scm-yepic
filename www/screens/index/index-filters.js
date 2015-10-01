@@ -27,7 +27,7 @@ categorizes activities on the activites page */
     }
     return function(input, labelType, dontHideLoader) {
 
-        if( !input ) {
+        if (!input) {
             return [];
         }
 
@@ -52,9 +52,13 @@ categorizes activities on the activites page */
 
         // we organize the activites into an array of today, tomorrow, later
         var sorted = {
+
+            //TODO SCM 
+
             0: [],
             1: [],
-            2: []
+            2: [],
+            3: []
         };
 
         // if there are no activites, hide loader
@@ -212,8 +216,13 @@ categorizes activities on the activites page */
 
             var endTimeOffset = 172800000; //48 hours
 
+            //TODO SCM
+            console.log(index[i].desc, index[i].endTime + endTimeOffset, new Date(index[i].endTime + endTimeOffset), Date.now())
+
             // make sure activity has description, endtime+48hours hasn't passed yet, isn't in a community or if it is in a community, the user is part of that community, the event isn't friends only or if it is friends only, the user is friends with the creator of the activity, and the user didn't create the event (we load those seperately)
-            if (index[i].desc && index[i].endTime+endTimeOffset >= Date.now() && (!index[i].community || index[i].community == 0 || index[i].community == $rootScope.user.community) && !(index[i].private && (!$rootScope.userFriendsIndexed || ($rootScope.userFriendsIndexed && !$rootScope.userFriendsIndexed[index[i].uid])) && index[i].uid != $rootScope.user.id)) {
+            if (index[i].desc && index[i].endTime + endTimeOffset >= Date.now() && (!index[i].community || index[i].community == 0 || index[i].community == $rootScope.user.community) && !(index[i].private && (!$rootScope.userFriendsIndexed || ($rootScope.userFriendsIndexed && !$rootScope.userFriendsIndexed[index[i].uid])) && index[i].uid != $rootScope.user.id)) {
+
+                console.log(index[i].desc)
                 var prefix = '';
                 var val = input[i];
                 var hours = moment(val.startTime).hours();
@@ -273,7 +282,10 @@ categorizes activities on the activites page */
                                     if (altDay == 'Today') {
                                         dayIndex = 0;
                                     } else {
-                                        pushVal = false;
+                                        // TODO SCM
+
+                                        // pushVal = false;
+                                        dayIndex = 3;
                                     }
                                 } else {
                                     dayIndex = 2;
@@ -307,7 +319,9 @@ categorizes activities on the activites page */
                             if (altDay == 'Today') {
                                 dayIndex = 0;
                             } else {
-                                pushVal = false;
+                                //TODO SCM 
+                                dayIndex=3;
+                                // pushVal = false;
                             }
                         } else {
                             dayIndex = 2;
