@@ -58,7 +58,8 @@ categorizes activities on the activites page */
             0: [],
             1: [],
             2: [],
-            3: []
+            3: [],
+            4: []
         };
 
         // if there are no activites, hide loader
@@ -276,20 +277,34 @@ categorizes activities on the activites page */
                                 } else {
                                     prefix = '';
                                 }
-                            } else {
-                                if (day == 'Yesterday') {
+                            } else if (day == 'Yesterday') {
 
-                                    if (altDay == 'Today') {
-                                        dayIndex = 0;
-                                    } else {
-                                        // TODO SCM
-
-                                        // pushVal = false;
-                                        dayIndex = 3;
-                                    }
+                                if (altDay == 'Today') {
+                                    dayIndex = 0;
                                 } else {
-                                    dayIndex = 2;
+                                    // TODO SCM
+
+                                    // pushVal = false;
+                                    dayIndex = 3;
                                 }
+                            // } else if (day == 'Last') {
+                            } else if (day.includes('Last')) {
+
+                                // day.includes('Last')
+                                // TODO SCM LOGICA PARA SABER SI ACABA UN DIA ANTES OSEA AYER
+
+                                if (altDay == 'Yesterday') {
+                                    dayIndex = 3;
+                                } else {
+                                    // TODO SCM
+
+                                    // pushVal = false;
+                                    dayIndex = 4;
+                                }
+                            } else {
+
+                                dayIndex = 2;
+
                             }
 
                             // add time category to list of activites, so it shows up on index template
@@ -309,23 +324,64 @@ categorizes activities on the activites page */
                 if (val) {
                     var dayIndex = 0;
                     var pushVal = true;
+                    /* if (day == 'Today') {
+                         dayIndex = 0;
+                     } else if (day == 'Tomorrow') {
+                         dayIndex = 1;
+                         console.log('va;', val);
+                     } else {
+                         if (day == 'Yesterday') {
+                             if (altDay == 'Today') {
+                                 dayIndex = 0;
+                             } else {
+                                 //TODO SCM 
+                                 dayIndex = 3;
+                                 // pushVal = false;
+                             }
+                         } else {
+                             dayIndex = 2;
+                         }
+
+                     }*/
                     if (day == 'Today') {
                         dayIndex = 0;
+                        if (labelType) {
+                            prefix = 'This ';
+                        } else {
+                            prefix = '';
+                        }
                     } else if (day == 'Tomorrow') {
                         dayIndex = 1;
-                        console.log('va;', val);
-                    } else {
-                        if (day == 'Yesterday') {
-                            if (altDay == 'Today') {
-                                dayIndex = 0;
-                            } else {
-                                //TODO SCM 
-                                dayIndex=3;
-                                // pushVal = false;
-                            }
+                        if (labelType) {
+                            prefix = 'Tomorrow ';
                         } else {
-                            dayIndex = 2;
+                            prefix = '';
                         }
+                    } else if (day == 'Yesterday') {
+
+                        if (altDay == 'Today') {
+                            dayIndex = 0;
+                        } else {
+                            // TODO SCM
+
+                            // pushVal = false;
+                            dayIndex = 3;
+                        }
+                    // } else if (day == 'Last') {
+                        } else if (day.includes('Last')) {
+                        // TODO SCM LOGICA PARA SABER SI ACABA UN DIA ANTES OSEA AYER
+
+                        if (altDay == 'Yesterday') {
+                            dayIndex = 3;
+                        } else {
+                            // TODO SCM
+
+                            // pushVal = false;
+                            dayIndex = 4;
+                        }
+                    } else {
+
+                        dayIndex = 2;
 
                     }
                     if (pushVal)

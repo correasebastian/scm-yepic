@@ -19,7 +19,7 @@
 
     <ion-slide-box controller-bind="$root.$ionicSlideBoxController" show-pager="false" on-slide-changed="slideChanged($index)" active-slide="timePeriod">
     <!-- TODO: SCM POR QUE EL REPEAT QUEMADO por que es mañana afternoon evening por eso es-->
-        <ion-slide ng-repeat="i in [3,0,1,2]">
+        <ion-slide ng-repeat="i in [4,3,0,1,2]">
         <!-- <ion-slide ng-repeat="i in [0]"> -->
             <ion-content style="padding-bottom:10px" delegate-handle="scroll_{i}" ng-show="!$root.showLoader">
                 <div ng-if="$root.sortedEventList[i].length==0 || ($root.finishedLoadingEvents && !$root.sortedEventList[i])" style="text-align:center">
