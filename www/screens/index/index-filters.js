@@ -215,7 +215,9 @@ categorizes activities on the activites page */
                 };
             }
 
-            var endTimeOffset = 172800000; //48 hours
+            // var endTimeOffset = 172800000; //48 hours
+            var endTimeOffset = 172800000*2; //48 hours
+
 
             //TODO SCM
             console.log(index[i].desc, index[i].endTime + endTimeOffset, new Date(index[i].endTime + endTimeOffset), Date.now())

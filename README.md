@@ -127,7 +127,8 @@ FIREBASE WARNING: Using an unspecified index. Consider adding ".indexOn": "g" at
  el=R.eventList
 
  f= function(o,k){
- console.log(o.desc, new Date(o.endTime))
+ console.log(o.desc)
+ console.log( new Date(o.endTime))
  }
  angular.forEach(el,f)
 
@@ -146,3 +147,36 @@ if(a.desc){
  
  }
  angular.forEach(sel,sf)
+
+ ----------------------------------------
+
+var coords; navigator.geolocation.getCurrentPosition(function(g){console.log(g); coords=g.coords})
+
+
+ --------------------
+
+  F=new Firebase('https://scmyepic.firebaseio.com/')
+startTime=moment().hours(-20).unix()*1000
+  Fg=F.child('geo').orderByChild("startTime").startAt(startTime)
+Fg.on('value',function(snap){console.log(snap.val())})
+  G=new GeoFire(Fg)
+  var coords; navigator.geolocation.getCurrentPosition(
+  function(g){console.log(g);
+   coords=g.coords
+
+
+  geoQuery = G.query({
+                        center: [coords.latitude, coords.longitude],
+                        radius: parseInt(80)
+                    });
+
+
+
+                    FUN= function(msg){return function(res){console.log(msg,res)}};var geoQueryKeyEnter = geoQuery.on('key_entered', FUN('enter'));
+                    var geoQueryKeyExit = geoQuery.on('key_exited', FUN('exit'));
+                    var geoQueryReady = geoQuery.on('ready', FUN('ready'));
+
+
+  })
+
+
