@@ -5,10 +5,13 @@
 
     <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
     <meta name="apple-itunes-app" content="app-id=945233552">
-
+<!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self' https:"> -->
+<!-- <meta http-equiv="Content-Security-Policy" content="default-src *; style-src *; script-src *;"> -->
+<!-- <meta http-equiv="Content-Security-Policy" content="default-src *; style-src 'self' 'unsafe-inline'; script-src 'self' https:  'unsafe-inline' 'unsafe-eval'"> -->
+<meta http-equiv="Content-Security-Policy" content="default-src *; script-src 'self' 'unsafe-inline' 'unsafe-eval' *; style-src  'self' 'unsafe-inline' *">
     <title>Yepic</title>
 
-    <script src="http://maps.googleapis.com/maps/api/js?libraries=places&sensor=false"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?libraries=places&sensor=false"></script>
 
     <link href="lib/ionic/css/ionic.css" rel="stylesheet">
     <link href="ext/smartbanner/smartbanner.css" rel="stylesheet">
@@ -49,8 +52,7 @@
     </script>
 
     <script src="ext/google/infobubble.js"></script>
-
-    <script src="lib/ion-google-place/ion-google-place.js"></script>
+<!-- <script src="lib/ion-google-place/ion-google-place.js"></script>-->
     <link rel="stylesheet" href="ext/google/ion-google-place/ion-google-place.css">
 
     <script src="lib/angulartics/dist/angulartics.min.js"></script>

@@ -77,16 +77,18 @@ angular.module('index-controllers', ['firebase'])
         if (newVal && !$rootScope.loadedUserEvents) {
             $rootScope.userEvents = [];
 
+             var endTimeOffset = 172800000*2; //48 hours* 2
+
             // add to 'my activities' if new acitivity appears in firebase
             settings.fbRef.child('users/' + $rootScope.user.id + '/likes')
-                .startAt(Date.now() + $rootScope.serverOffset).on('child_added', function(snap) {
+                .startAt(Date.now() + $rootScope.serverOffset -endTimeOffset).on('child_added', function(snap) {
                     var eventDetails = Event(snap.key(), true);
                     eventDetails.$loaded(function(err,res) {
                         L.l('err',err)
                         L.l('res', res)
                         if (settings.lowBandwidthMode)
                             eventDetails.$inst().$ref().off();
-                        if (eventDetails.endTime > Date.now() + $rootScope.serverOffset) {
+                        if (eventDetails.endTime > Date.now() + $rootScope.serverOffset -endTimeOffset) {
                             $rootScope.userEvents.push(eventDetails);
                             $rootScope.userEvents.sort(function(a, b) {
                                 if (a.startTime > b.startTime) {

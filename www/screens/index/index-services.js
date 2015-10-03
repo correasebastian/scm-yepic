@@ -14,8 +14,8 @@ angular.module("index-services", [])
 
                     //TODO SCM
 
-                    // var distance = GeoFire.distance([this.location.latitude, this.location.longitude], [$rootScope.user.location.latitude, $rootScope.user.location.longitude]);
-                    var distance = GeoFire.distance([this.location.latitude, this.location.longitude], [6.244203,-75.5812119 ]);
+                    var distance = GeoFire.distance([this.location.latitude, this.location.longitude], [$rootScope.user.location.latitude, $rootScope.user.location.longitude]);
+                    // var distance = GeoFire.distance([this.location.latitude, this.location.longitude], [6.244203,-75.5812119 ]);
                    //return disctance in km
                     // distance = distance.toFixed(1) + ' mi';
                     distance = distance *0.621371
