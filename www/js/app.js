@@ -1,6 +1,7 @@
 var resumeLocation = '';
 var justResumed = false;
-var R = null;
+var R = null,
+    US = null;
 
 // we call this when the user logs out, so they don't receive push notifications
 function killPushwoosh() {
@@ -56,20 +57,25 @@ angular.module('yepic', ['ionic', 'app-config', 'app-directives', 'app-filters',
     lowBandwidthMode: false
 })
 
-.run(function($ionicPlatform, $rootScope, $cordovaGoogleAnalytics, $ionicSideMenuDelegate, $firebase, $window, $ionicLoading, $state, PresenceService, EventService, UserService, userCache, $location, settings, NotificationService, $cordovaPush, $ionicNavBarDelegate, ContactManager, $http, $filter, L) {
+.run(function($ionicPlatform, $rootScope, $cordovaGoogleAnalytics, $ionicSideMenuDelegate,
+    $firebase, $window, $ionicLoading, $state, PresenceService, EventService, UserService,
+    userCache, $location, settings, NotificationService, $cordovaPush, $ionicNavBarDelegate,
+    ContactManager, $http, $filter, L) {
 
     R = $rootScope;
+    US = UserService;
     // initiates the pushwoosh plugin
     function initPushwoosh(user) {
         var pushNotification = window.plugins.pushNotification;
 
         document.addEventListener('push-notification', function(event) {
-            //var notification = event.notification;
-            //var title = event.notification.title;
-            //var userData = event.notification.userdata;
-            //var msg = event.notification.message;
+            L.l('push-notification', event)
+            var notification = event.notification;
+            var title = event.notification.title;
+            var userData = event.notification.userdata;
+            var msg = event.notification.message;
 
-            //pushNotification.setApplicationIconBadgeNumber(0);
+            pushNotification.setApplicationIconBadgeNumber(0);
         });
 
         pushNotification.onDeviceReady({
@@ -89,7 +95,9 @@ angular.module('yepic', ['ionic', 'app-config', 'app-directives', 'app-filters',
                     settings.fbRef.child('users/' + user.uid + '/core/device').set(status);
                 }
             },
-            function(status) {}
+            function(err) {
+                L.l('error registrando el device en pushwoosh', err)
+            }
         );
 
         //pushNotification.setApplicationIconBadgeNumber(0);

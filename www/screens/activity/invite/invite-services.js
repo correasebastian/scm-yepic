@@ -59,7 +59,7 @@ angular.module('invite-services', ['firebase'])
 
                 var newContactList = [];
 
-                $cordovaContacts.find(options).then(function(contacts) {
+                return $cordovaContacts.find(options).then(function(contacts) {
 
                     for (var i = 0; i < contacts.length; i++) {
                         if (contacts[i].displayName !== null || contacts[i].name !== null) {
@@ -83,6 +83,7 @@ angular.module('invite-services', ['firebase'])
                             }
                         }
                     }
+                    return true;
 
                 });
             }

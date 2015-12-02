@@ -120,7 +120,10 @@ angular.module('index-controllers', ['firebase'])
 
     // if we haven't finished loading events, show the loading spinner
     if (!$rootScope.finishedLoadingEvents) {
-        $rootScope.timePeriod = 2;
+        // TODO SCM
+        // $rootScope.timePeriod = 2;
+        $rootScope.timePeriod = 0;
+
         $rootScope.$watch('loadingEvents', function(newVal, oldVal) {
             if (newVal) {
                 $rootScope.showLoader = true;
@@ -134,14 +137,20 @@ angular.module('index-controllers', ['firebase'])
         if (newVal && newVal != oldVal) {
             $rootScope.showLoader = false;
             //TODO SCM
-            // $rootScope.timePeriod = 1;
+            $rootScope.timePeriod = 0;
             $ionicSlideBoxDelegate.slide(2,1);
         }
     });
 
 
     // the names we give the 3 different categories on index
-    $scope.timePeriodNames = ['Earlier','Yesterday','Today', 'Tomorrow', 'Later'];
+    //TODO SCM
+    $scope.timePeriodNames = ['Today', 'Tomorrow', 'Later'];
+
+    // $scope.timePeriodNames = ['Earlier','Yesterday','Today', 'Tomorrow', 'Later'];
+    $rootScope.timePeriod=0;
+    // $rootScope.timePeriod=2;
+
     // $scope.timePeriodNames = ['Yesterday','Today', 'Tomorrow', 'Later'];
     $scope.selectedFeed = 0;
 

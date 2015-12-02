@@ -5,6 +5,9 @@ angular.module('notifications-services', ['firebase'])
 
         function addNotificationToFeed(type, alertText, fullText, eid, uid, uid2) {
 
+            //TODO SCM invite a friend no esta mandando ninguna notificacion pushwoosh , 
+
+
             globalNotificationFeedRef = settings.fbRef.child('notifications').push({
                 eid: eid,
                 uid: uid,

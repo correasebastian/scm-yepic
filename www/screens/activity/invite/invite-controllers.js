@@ -47,7 +47,14 @@ angular.module('invite-controllers', ['firebase'])
     $scope.eventAttendees = $firebase(settings.fbRef.child('events/' + $scope.eventId + '/likes')).$asObject();
 
     if (window.plugins && ContactManager.contacts.length == 0) {
-        ContactManager.getContacts();
+        ContactManager.getContacts()
+            .then(function(r) {
+                $rootScope.showLoader = false;
+            })
+            .catch(function(err) {
+                console.log('error retrieven conctac', err)
+                $rootScope.showLoader = false;
+            })
     }
 
 
